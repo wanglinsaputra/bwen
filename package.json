@@ -1,0 +1,32 @@
+{
+  "name": "qwen-auto-key-generator",
+  "version": "1.0.0",
+  "description": "CLI automation bot that registers Qwen Cloud accounts via Gmail dot trick, solves slider captchas for free, and scrapes API keys.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "dotenv": "^16.4.5",
+    "imap-simple": "^5.1.0",
+    "jimp": "^0.22.12",
+    "log-update": "^8.0.0",
+    "p-limit": "^3.1.0",
+    "playwright": "^1.48.1",
+    "playwright-extra": "^4.3.6",
+    "prompts": "^2.4.2",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "scrapingbee": "^1.8.2"
+  },
+  "devDependencies": {
+    "@types/imap-simple": "^4.2.7",
+    "@types/log-update": "^2.0.0",
+    "@types/node": "^20.14.0",
+    "@types/prompts": "^2.4.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.0"
+  }
+}

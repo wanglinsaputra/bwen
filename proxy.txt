@@ -1,0 +1,4 @@
+# Supported proxy formats:
+# user:pass@host:port
+# ip:port
+# ip:port:user:pass
