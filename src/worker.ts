@@ -6,7 +6,6 @@ import chalk from 'chalk';
 
 import { config } from './config';
 import { pollForOtp } from './otp-reader';
-import { solveSliderCaptcha } from './captcha-solver';
 import { generateTempMailAddress, pollTempMailAPI } from './temp-mail';
 import { ProxyConfig } from './proxy';
 import { getTui } from './tui';
@@ -459,15 +458,6 @@ async function runGmailWorker(input: WorkerInput): Promise<WorkerResult> {
 
     await registerFlow(page, workerId, email);
 
-    const captchaContainer = page.locator('.nc_scale, .slider-captcha, [class*="captcha"], [class*="slider"]').first();
-    if (await captchaContainer.isVisible({ timeout: 3000 }).catch(() => false)) {
-      getTui().updateWorker(workerId, 'solving captcha...');
-      const captchaResult = await solveSliderCaptcha(page, index, total);
-      if (!captchaResult.success) {
-        throw new Error('Captcha solving failed after all retries');
-      }
-    }
-
     getTui().updateWorker(workerId, 'waiting for OTP...');
     const otp = await pollForOtp(config.gmailUsername, config.gmailAppPassword, email);
     await fillOtp(page, workerId, otp);
@@ -537,15 +527,6 @@ async function runTempMailWorker(input: WorkerInput): Promise<WorkerResult> {
     browser = br;
 
     await registerFlow(qwenPage, workerId!, actualEmail);
-
-    const captchaContainer = qwenPage.locator('.nc_scale, .slider-captcha, [class*="captcha"], [class*="slider"]').first();
-    if (await captchaContainer.isVisible({ timeout: 3000 }).catch(() => false)) {
-      getTui().updateWorker(workerId!, 'solving captcha...');
-      const captchaResult = await solveSliderCaptcha(qwenPage, index, total);
-      if (!captchaResult.success) {
-        throw new Error('Captcha solving failed after all retries');
-      }
-    }
 
     const otp = await pollTempMailAPI(actualEmail, workerId!);
 
